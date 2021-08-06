@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+const char room[] = R"=====(<!DOCTYPE html>
 <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
@@ -388,3 +388,4 @@
     </body>
     
 </html>
+)=====";
