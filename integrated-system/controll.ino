@@ -9,7 +9,7 @@ IPAddress subnet(255,255,255,0);
 WiFiServer server(80);
 
 //declara os protótipos das funções
-void requisicao(bool);
+// void requisicao(bool);
 
 bool statusBotao = false;
 //Pagina HTML
@@ -44,6 +44,8 @@ void setup() {
   Serial.println(WiFi.localIP());
  }
 
+int state = 0;
+
 void loop() {
   WiFiClient client = server.available();
   if(!client){
@@ -53,43 +55,52 @@ void loop() {
   while(!client.available()){
       delay(1);
    }
-   bool request = digitalRead(D1);
-   requisicao(request);
-   Serial.println(request);
+
+  //  bool request = digitalRead(D1);
+  //  statusBotao = requisicao(request);
+  //  Serial.println(request);
    client.flush();
    client.println("HTTP/1.1 200 OK");
    client.println("Content-Type: text/html");
    client.println("");
    
    client.println(room); 
-   statusBotao ? client.println("<div class='leito-aux-on'>"):client.println("<div class='leito'>");
+    statusBotao ? client.println("<div class='leito-aux-on'>") : client.println("<div class='leito'>");
+  if (digitalRead(D1) == HIGH and state == 0) {
+    Serial.println("Botão pressiado");
+    digitalWrite(D4, HIGH);
+    // client.println("<div class='leito-aux-on'>");
+    statusBotao = true;
+    state = 1;
+    // client.flush();
+  }
+    digitalWrite(D4, LOW);
+  if (state != 1) {
+    // client.println("<div class='leito'>");
+    statusBotao = false;
+    client.flush();
+  } 
+ 
+  client.flush();
    client.println("<h1 class='item-head'>Leito 2</h1>");
    client.println(" <div class='state'>");
    client.println(" <p class='aux'>Auxílio</p>");
    client.println("<p class='emergency'>Emergência</p>");
    client.println("</div>");
    client.println("</div>");
-   
    client.println(roomDown);
-   delay(1);
    Serial.println("Cliente desconectado");
    Serial.println("");
  }
 
- void requisicao(bool request){
-    if(digitalRead(D1)==0)
-    {
-        Serial.println("Botão não pressionado");
-        digitalWrite(D4, HIGH);
-        statusBotao = true;
-    }
-    else
-    {
-       Serial.println("Botão pressionado");
-       digitalWrite(D4, LOW);
-       statusBotao = false;
-       
-    }
-    delay(5); 
- }
- 
+//  bool requisicao(bool request){
+//     if(request == 0) {
+//         Serial.println("Botão não pressionado");
+//         digitalWrite(D4, LOW);
+//         return false;
+//     } else {
+//        Serial.println("Botão pressionado");
+//        digitalWrite(D4, HIGH);
+//        return true;  
+//     }
+//  }
