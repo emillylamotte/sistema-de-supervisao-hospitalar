@@ -26,6 +26,8 @@ Quando o botão auxílio é pressionado, um sinal visual na cor azul e indicando
 determinado leito algum tipo de ajuda foi solicitado. Já quando o botão vermelho é pressionado, um sinal visual na cor vermelha e também e indicando o número do quarto/leito 
 do paciente é acionado na tela de supervisão, sinalizando que naquele determinado leito está acontecendo uma emergência e é necessário que algum enfermeiro/médico se desloque 
 imediatamente até o local. Este processo faz com que o atendimento seja agilizado e pode ajudar na condição de saúde do paciente. 
+
+Esse protótipo é composto por um microcontrolador NodeMcu, responsável por monitorar o estado dos botões e também hospedar o servidor web que será acessado pelos profissionais de saúde e exibira o front-end da aplicação.
 <br>
 <p align="center"> 
  <img src="https://user-images.githubusercontent.com/79487290/133716552-271e822c-080e-45a1-a83f-24865a4c625a.png" width="400"/>
